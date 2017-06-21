@@ -83,7 +83,12 @@ class MakeEloquentFilter extends Command
 
     public function getPath()
     {
-        return app_path(str_replace([$this->getAppNamespace(), '\\'], ['', '/'], $this->getClassName().'.php'));
+        if(!function_exists('app_path')){
+            $path = app_path(str_replace([$this->getAppNamespace(), '\\'], ['', '/'], $this->getClassName().'.php'));
+        }else{
+            $path = app('path/'.str_replace([$this->getAppNamespace(), '\\'], ['', '/'], $this->getClassName().'.php'));
+        }
+        return $path;
     }
 
     /**
